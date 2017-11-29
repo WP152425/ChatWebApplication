@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${ pageContext.request.contextPath }" />
     
 <!DOCTYPE html>
 <html>
@@ -8,20 +10,26 @@
 	<title>JSP Socket 채팅</title>
 	<meta http-equiv="Content-Type" content = "text/html; charset=UTF-8">
 	<meta name = "viewprot" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../css/bootstrap.css">
-	<link rel="stylesheet" href="../css/socket.css">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="${ contextPath }/css/bootstrap.css">
+	<link rel="stylesheet" href="${ contextPath }/css/socket.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<%
+    	String category = (String)session.getAttribute("category");
+   	 %>
 	<script type="text/javascript">
+		var lastID = 0;  
 		function submitFunction(){
 			var chatName = $('#chatName').val();
 			var chatContent = $('#chatContent').val();
+			var chatCategory = "${ category }";
 			$.ajax({
 				type : "POST",
-				url : "../chatSubmitServlet",
+				url : "${ contextPath }/ChatSubmit.do",
 				data : {
-					chatName : chatName,
-					chatContent : chatContent
+					chatName : encodeURIComponent(chatName),
+					chatContent : encodeURIComponent(chatContent),
+					chatCategory : chatCategory
 				},
 				success : function(result){
 					if (result == 1){
@@ -40,6 +48,57 @@
 			alert.style.display = 'block';
 			window.setTimeout(function(){alert.style.display = 'none'}, delay);
 		}
+		function chatListFunction(type){
+			var chatCategory = "${ category }";
+			$.ajax({
+				type : "POST",
+				url : "${ contextPath }/ChatList.do",
+				data : {
+					listType : type,
+					chatCategory : chatCategory
+				},
+				success : function(data){
+					if (data == "") return;
+					var parsed = JSON.parse(data);
+					var result = parsed.result;
+					for (var i = 0; i < result.length; i++) {
+						addChat(result[i][0].value, result[i][1].value, result[i][2].value);
+					}
+					lastID = Number(parsed.last);
+					
+				}
+			});
+		}
+		function addChat(chatName, chatContent, chatTime){
+			var text = '<div class="row">' +
+			'<div class="col-lg-12">' +
+			'<div class="media">' +
+			'<a class="pull-left" href="#">' +
+			'<img class="media-object img-circle" src="${ contextPath }/image/anony.jpg">' +
+			'</a>' +
+			'<div class="media-body">' +
+			'<h4 class="media-heading">' + chatName +
+			'<span class="small pull-right">' + chatTime + '</span>' +	
+			'</h4>' +
+			'</div>' +
+			'<p>' + chatContent + '</p>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<hr>';
+			var inChatList = document.getElementById("chatList").innerHTML;
+			var list = inChatList.concat(text);
+			document.getElementById("chatList").innerHTML = list;
+			$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
+		}
+		
+		function getInfiniteChat(){
+			setInterval(function() {
+				chatListFunction(lastID);
+			}, 1000);
+		}
+		
 	</script>
 </head>
  
@@ -51,53 +110,16 @@
 					<div class="portlet portlet-default">
 						<div class="portlet-heading">
 							<div class="portlet-title">
-								<h4><i class="fa fa-circle text-green"></i>실시간 채팅방</h4>
+								<h4><i class="fa fa-circle text-green" id = "category">${ category } Chatting Room</i></h4>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div id="chat" class="panel-collapse collapse in">
-							<div class="portlet-body chat-widget" style="overflow-y: auto; width : auto; height : 300px;">
-								<div class="row">
-									<div class="col-lg-12">
-										<p class="text-center text-muted small">2017년 5월 30일</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="media">
-											<a class="pull-left" href="#">
-												<img class="media-object img-circle" src="../image/anony.jpg">
-											</a>
-											<div class="media-body">
-												<h4 class="media-heading">홍길동
-													<span class="small pull-right">오전 12:23</span>
-												</h4>
-											</div>
-											<p>안녕하세요.</p>
-										</div>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="media">
-											<a class="pull-left" href="#">
-												<img class="media-object img-circle" src="../image/anony.jpg">
-											</a>
-											<div class="media-body">
-												<h4 class="media-heading">춘향이
-													<span class="small pull-right">오전 12:24</span>
-												</h4>
-											</div>
-											<p>안녕하세요.</p>
-										</div>
-									</div>
-								</div>																
-							</div>
+							<div id = "chatList" class="portlet-body chat-widget" style="overflow-y: auto; width : auto; height : 600px;"></div>
 							<div class="portlet-footer">
 								<div class="row">
 									<div class="form-group col-xs-4">
-										<input style="height:40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="20">
+										<input style="height:40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="8">
 									</div>
 								</div>
 								<div class="row" style="height:90px">
@@ -125,5 +147,11 @@
 			<strong>데이터베이스 오류가 발생했습니다.</strong>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			chatListFunction('ten');
+			getInfiniteChat();
+		});
+	</script>
 </body>
 </html>

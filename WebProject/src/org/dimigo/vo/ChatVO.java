@@ -1,11 +1,25 @@
-package org.dimigo.chat;
+package org.dimigo.vo;
 
-public class Chat {
-
+public class ChatVO {
+	
+	int chatID;
 	String chatName;
 	String chatContent;
 	String chatTime;
+	String chatCategory;
 	
+	public String getChatCategory() {
+		return chatCategory;
+	}
+	public void setChatCategory(String chatCategory) {
+		this.chatCategory = chatCategory;
+	}
+	public int getChatID() {
+		return chatID;
+	}
+	public void setChatID(int chatID) {
+		this.chatID = chatID;
+	}
 	public String getChatName() {
 		return chatName;
 	}

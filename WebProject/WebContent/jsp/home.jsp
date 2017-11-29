@@ -31,7 +31,7 @@ function menu_out(e) {
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="${ contextPath }/jsp/home.jsp">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -48,8 +48,8 @@ function menu_out(e) {
     	<span class="text-bold text-white">&nbsp; or &nbsp;</span>
     	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/jsp/signup.jsp">Sign up</a>
     </c:if>
-    <c:if test = "${ user != null }">
     <%-- 세션이 있는 경우 --%>
+    <c:if test = "${ user != null }">
 	    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 	    <li class="nav-item dropdown">
 	      <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,10 +70,42 @@ function menu_out(e) {
   </div>
 </nav>
 <div class="container">
-<h1>Hello, Bootstrap</h1>
-<p>
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
-</p>
+	<h1>Comild</h1>
+	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+	  <ol class="carousel-indicators">
+	    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+	    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+	    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+	  </ol>
+	  <div class="carousel-inner">
+	    <div class="carousel-item active">
+	      <img class="d-block w-100" src="${ contextPath }/image/messenger.jpg" alt="First slide" style="width:500px; height:600px">
+	      <div class="carousel-caption d-none d-md-block" style = "color : #34495E">
+		    <h4>World have a lot of messenger we can use comfortable.</h4>
+		  </div>
+	    </div>
+	    <div class="carousel-item">
+	      <img class="d-block w-100" src="${ contextPath }/image/chatcategoty.jpg" alt="Second slide" style="width:500px; height:600px">
+	      <div class="carousel-caption d-none d-md-block" >
+		    <h5>We can communicate with people who are interested in category that you want.</h5>
+		  </div>
+	    </div>
+	    <div class="carousel-item">
+	      <img class="d-block w-100" src="${ contextPath }/image/inchat.png" alt="Third slide" style="width:500px; height:600px">
+	      <div class="carousel-caption d-none d-md-block" style = "color : #34495E">
+		    <h4>It is form in chatroom.</h4>
+		  </div>
+	    </div>
+	  </div>
+	  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>
 </div>
 
 <%@ include file="footer.jsp" %>

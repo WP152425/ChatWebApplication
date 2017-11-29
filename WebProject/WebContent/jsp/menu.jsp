@@ -5,9 +5,9 @@
 
 <ul class="navbar-nav mr-auto">
       <li class="nav-item" onmouseover="menu_over(this);" onmouseout="menu_out(this);">
-        <a class="nav-link" href="${ contextPath }/session.do">게시글</a>
+        <a class="nav-link" href="#">게시글</a>
       </li>
       <li class="nav-item" onmouseover="menu_over(this);" onmouseout="menu_out(this);">
-        <a class="nav-link" href="${ contextPath }/">채팅방</a>
+        <a class="nav-link" href="${ contextPath }/jsp/category.jsp">채팅방</a>
       </li>
     </ul>

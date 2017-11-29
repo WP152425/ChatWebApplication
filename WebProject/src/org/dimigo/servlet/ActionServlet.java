@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dimigo.action.ChatCategoryAction;
+import org.dimigo.action.ChatListAction;
+import org.dimigo.action.ChatSubmitAction;
 import org.dimigo.action.IAction;
 import org.dimigo.action.infoAction;
+import org.dimigo.action.loginAction;
 import org.dimigo.action.logoutAction;
 import org.dimigo.action.signupAction;
-import org.dimigo.action.loginAction;
 
 /**
  * Servlet implementation class ActionServlet
@@ -38,6 +41,9 @@ public class ActionServlet extends HttpServlet {
     	actions.put("logout", new logoutAction());
     	actions.put("info", new infoAction());
     	actions.put("signup", new signupAction());
+    	actions.put("ChatList", new ChatListAction());
+    	actions.put("ChatSubmit", new ChatSubmitAction());
+    	actions.put("ChatCategory", new ChatCategoryAction());
     }
 
 	/**
