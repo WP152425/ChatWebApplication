@@ -13,11 +13,13 @@ public class ChatCategoryAction implements IAction{
 		response.setContentType("text/html;charset=utf-8");
 		
 		String chatCategory = request.getParameter("category");
+		String chatName = request.getParameter("name");
 		
-		System.out.println(chatCategory);
+		System.out.println("category : " + chatCategory + ", user : " + chatName);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("category", chatCategory);
+		session.setAttribute("chatName", chatName);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/broadcast2.jsp");
 		rd.forward(request, response);

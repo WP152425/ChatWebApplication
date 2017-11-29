@@ -7,7 +7,7 @@
 <html>
 
 <head>
-	<title>JSP Socket 채팅</title>
+	<title>Chatting Room</title>
 	<meta http-equiv="Content-Type" content = "text/html; charset=UTF-8">
 	<meta name = "viewprot" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="${ contextPath }/css/bootstrap.css">
@@ -16,11 +16,12 @@
 	<script src="js/bootstrap.js"></script>
 	<%
     	String category = (String)session.getAttribute("category");
+		String chatName = (String)session.getAttribute("chatName");
    	 %>
 	<script type="text/javascript">
 		var lastID = 0;  
 		function submitFunction(){
-			var chatName = $('#chatName').val();
+			var chatName = "${ chatName }";
 			var chatContent = $('#chatContent').val();
 			var chatCategory = "${ category }";
 			$.ajax({
@@ -108,20 +109,17 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="portlet portlet-default">
-						<div class="portlet-heading">
+						<div class="portlet-heading" style="line-height : 13px">
 							<div class="portlet-title">
 								<h4><i class="fa fa-circle text-green" id = "category">${ category } Chatting Room</i></h4>
 							</div>
+							<br>
+								<span class="big pull-right">${ user.name }님</span>
 							<div class="clearfix"></div>
 						</div>
 						<div id="chat" class="panel-collapse collapse in">
 							<div id = "chatList" class="portlet-body chat-widget" style="overflow-y: auto; width : auto; height : 600px;"></div>
 							<div class="portlet-footer">
-								<div class="row">
-									<div class="form-group col-xs-4">
-										<input style="height:40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="8">
-									</div>
-								</div>
 								<div class="row" style="height:90px">
 									<div class="form-group col-xs-10">
 										<textarea style="height:80px;" id="chatContent" class="form-control" placeholder="메시지를 입력하세요." maxlength=100></textarea>

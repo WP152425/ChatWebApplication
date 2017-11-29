@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Home</title>
+<title>Category</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <link rel="stylesheet" href="${ contextPath }/css/footer.css">
 <style>
@@ -26,6 +26,10 @@ img.card-img-top {
 }
 </style>
 
+    <%
+    	UserVO user = (UserVO)session.getAttribute("user");
+    %>
+
 <script>
 
 function menu_over(e) {
@@ -37,6 +41,7 @@ function menu_out(e) {
  
 function categoryFunction(category){
 	document.getElementById("category").value = category;
+	document.getElementById("name").value = "${ user.name }";
 	
 }
 </script>
@@ -53,9 +58,6 @@ function categoryFunction(category){
   	<%@ include file="menu.jsp" %>
   	
     <%-- 세션이 없는 경우 --%>
-    <%
-    	UserVO user = (UserVO)session.getAttribute("user");
-    %>
     <c:if test="${ user == null }">
     	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/jsp/login.jsp">Sign in</a>
     	<span class="text-bold text-white">&nbsp; or &nbsp;</span>
@@ -170,6 +172,7 @@ function categoryFunction(category){
 		</div>
 	</div>	
 	<input type="hidden" name = "category" id="category" value = "" />
+	<input type="hidden" name = "name" id = "name" value = ""/>
 	</form>
 </div>
 
